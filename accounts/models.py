@@ -24,6 +24,10 @@ class Author(models.Model):
     @rating.setter
     def rating(self, rating):
         self.update_rating(rating)
+
+    def __str__(self):
+        fio=self.full_name.split()
+        return f'{fio[0][0]}. {fio[1][0]}. {fio[2]}'
 """
         # сначала посчитаем рейтинги за статьи
         articles_rating = 0

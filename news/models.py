@@ -41,6 +41,13 @@ class Post(models.Model):
         self.rating += - 1
         self.save()
 
+    def __str__(self):
+        return f'{self.title.title()}: {self.content[:20]}'
+
+    # возвращает рейтинг автора
+    @property
+    def type(self):
+        return self.get_message_type_display()
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -61,6 +68,9 @@ class Comment(models.Model):
     def dislike(self):
         self.rating += - 1
         self.save()
+
+    def __str__(self):
+        return f'{self.user.title()}: {self.text[:20]}'
 
 
 def calculate_ratings():
