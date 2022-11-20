@@ -10,7 +10,7 @@ def current_time(format_string='%b %d %Y'):
 
 
 @register.simple_tag()
-def news_length(news=[]):
+def posts_length(news=[]):
     return len(news)
 
 
@@ -24,3 +24,11 @@ def post_type(eng_type):
         return types[eng_type]
     else:
         return ''
+
+# тег для заполнения полей запроса
+@register.simple_tag(takes_context=True)
+def url_replace(context, **kwargs):
+   d = context['request'].GET.copy()
+   for k, v in kwargs.items():
+       d[k] = v
+   return d.urlencode()

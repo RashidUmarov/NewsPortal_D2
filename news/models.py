@@ -1,11 +1,14 @@
 from django.db import models
 from accounts.models import Author
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 
 # категория публикации - пост или статья
 class Category(models.Model):
     name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 # публикация
@@ -48,6 +51,9 @@ class Post(models.Model):
     @property
     def type(self):
         return self.get_message_type_display()
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
